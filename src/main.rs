@@ -40,10 +40,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 async fn run() -> Result<(), Box<dyn std::error::Error>> {
-    let _ = Args::try_parse().unwrap_or_else(|err| {
+    let _ = Args::try_parse().unwrap_or_else(|_err| {
         let mut cmd = Args::command();
         cmd.print_help().unwrap();
-        println!();
         std::process::exit(1);
     });
 
