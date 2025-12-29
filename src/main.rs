@@ -1,4 +1,5 @@
 use clap::Parser;
+use clap::CommandFactory;
 
 use std::path::Path;
 use ys1r::io::file_read;
@@ -39,13 +40,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 async fn run() -> Result<(), Box<dyn std::error::Error>> {
-        let args = Args::try_parse().unwrap_or_else(|err| {
-        eprintln!("{}", err);
+    let _ = Args::try_parse().unwrap_or_else(|err| {
+        let mut cmd = Args::command();
+        cmd.print_help().unwrap();
+        println!();
         std::process::exit(1);
     });
 
     let args = Args::parse();
-
 
     let rust_program = file_read(&args.filename);
 
