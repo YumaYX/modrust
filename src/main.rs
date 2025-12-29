@@ -80,7 +80,7 @@ fn instruction(number: u8) -> Result<String, InstructionError> {
     match number {
         1 => Ok("Please refactor the following rust code.".to_string()),
         2 => Ok("Please add appropriate tests to the following rust code.".to_string()),
-        3 => Ok("Please add or update rustdoc comments for the following code.".to_string()),
+        3 => Ok("Please add or update rustdoc comments for the following rust code.".to_string()),
         n => Err(InstructionError::InvalidNumber(n)),
     }
 }
