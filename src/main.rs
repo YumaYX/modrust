@@ -14,7 +14,7 @@ struct Args {
     #[arg(value_parser = validate_rs_file)]
     filename: String,
 
-    /// Numeric argument (1. refactoring, 2. add test code, 3. add or update comment)
+    #[arg(help = "Numeric argument\n1. refactoring\n2. add test code\n3. add or update comment")]
     #[arg(value_parser = clap::value_parser!(u8))]
     number: u8,
 }
@@ -39,7 +39,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 async fn run() -> Result<(), Box<dyn std::error::Error>> {
+        let args = Args::try_parse().unwrap_or_else(|err| {
+        eprintln!("{}", err);
+        std::process::exit(1);
+    });
+
     let args = Args::parse();
+
+
     let rust_program = file_read(&args.filename);
 
     let prompt = build_prompt(args.number, &rust_program?);
